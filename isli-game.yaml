@@ -1,0 +1,80 @@
+openapi: 3.0.0
+info:
+    title: ISLI游戏内容监管平台
+    description: 该项目有三个大模块如：游戏批复；防沉迷设置，全流程跟踪管控
+    version: 1.0.0
+    contact:
+        name: API Author
+        email: xiall@mpreader.com
+servers:
+    - 
+        url: 'http://172.16.2.27:{port}'
+        description: 开发环境
+        variables:
+            port:
+                enum:
+                    - '11000'
+                default: '11000'
+tags:
+    - 
+        name: login
+        description: 登录模块相关接口
+paths:
+    /game-content-supervision/v1/login:
+        summary: 登录成功后获取个人信息
+        description: ''
+        post:
+            tags:
+                - login
+            parameters:
+              - in: query
+                name: username
+                description: 用户名
+                required: true
+                schema:
+                  type: string
+              - in: query
+                name: password
+                description: 密码
+                required: true
+                schema:
+                  type: string
+            responses:
+                '200':
+                    $ref: '#/components/responses/loginResponse'
+components:
+    responses:
+        loginResponse:
+            description: 返回登录的用户名，用户头像等个人信息
+            content:
+                application/json:
+                    schema:
+                        $ref: '#/components/schemas/loginResponse'
+    schemas:
+        baseResponse:
+            type: object
+            properties:
+                code:
+                    type: string
+                msg:
+                    type: string
+                data:
+                    type: object
+            required:
+                - code
+                - msg
+                - data
+        loginResponse:
+            type: object
+            required:
+                - username
+                - password
+            properties:
+                username:
+                  type: string
+                  example: 'xialilin'
+                avatar:
+                  type: string
+                  example: ''
+        
+        
